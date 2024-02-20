@@ -98,9 +98,10 @@ namespace InternKYCApplication.Services.UserDetailService
                 {
                     filestream.Write(imageBytes, 0, imageBytes.Length);
                 }
-
-                string relativePath = "\\Upload\\" + fileName;
-                return relativePath;
+                 //return Path.Combine("Upload", fileName);
+                 string relativePath = Path.Combine("Upload", fileName);
+                 // relativePath = relativePath.Replace("/", "\\"); 
+                 return relativePath;
                 
             }
 
@@ -131,9 +132,9 @@ namespace InternKYCApplication.Services.UserDetailService
                         email = customers.email,
                         nationality = customers.nationality,
                         nic = customers.nic,
-                        selfie_image_path = customers.selfie_image_path,    
-                        nic_front_image_path = customers.nic_front_image_path,
-                        nic_rear_image_path= customers.nic_rear_image_path,
+                        selfie_image_path = ReplaceSlash(customers.selfie_image_path),    
+                        nic_front_image_path = ReplaceSlash(customers.nic_front_image_path),
+                        nic_rear_image_path= ReplaceSlash(customers.nic_rear_image_path),
                         created_at = customers.created_at,
                         updated_at  = customers.updated_at
                     }); ;
@@ -156,6 +157,10 @@ namespace InternKYCApplication.Services.UserDetailService
 
             return response;
         }
+        private string ReplaceSlash(string path)
+        {
 
+            return path.Replace("\\", "/");
+        }
     }
 }
